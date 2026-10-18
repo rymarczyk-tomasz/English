@@ -28,7 +28,7 @@ const SECTIONS = [
   ["today", "Dziś", [["review", "Powtórka dnia"]]],
   ["words", "Słówka", [["cards", "Fiszki"], ["quiz", "Quiz"], ["type", "Pisanie"], ["listen", "Ze słuchu"], ["gap", "Luki"], ["hard", "Najtrudniejsze"], ["own", "Moje słówka"], ["list", "Lista"]]],
   ["sent", "Zdania", [["sit", "Sytuacje"], ["tr", "Tłumaczenie"], ["free", "Odpowiedz swobodnie"], ["dict", "Dyktando"], ["shadow", "Powtarzanie na głos"]]],
-  ["gram", "Gramatyka", [["grammar", "Tematy"], ["irr", "Nieregularne"], ["wf", "Słowotwórstwo"], ["phr", "Phrasal verbs i przyimki"]]],
+  ["gram", "Gramatyka", [["grammar", "Zasady i ćwiczenia"], ["irr", "Nieregularne"], ["wf", "Słowotwórstwo"], ["phr", "Phrasal verbs i przyimki"]]],
   ["read", "Czytanie", [["read", "Teksty i dialogi"]]],
   ["exam", "Egzamin", [["exam", "Egzamin poziomu"]]],
   ["ai", "Z Claude", [["chat", "Rozmowa"], ["write", "Pisanie z oceną"]]]
@@ -572,7 +572,7 @@ const MODE_INFO = {
   cards: "Odwróć kartę i oceń się", quiz: "Wybierz z 4 odpowiedzi", type: "Wpisz po angielsku", listen: "Usłysz i zapisz",
   gap: "Wstaw słowo do zdania", hard: "Słowa, w których mylisz się najczęściej", own: "Dopisuj słowa z pracy i filmów", list: "Wyszukaj słowo i sprawdź status",
   sit: "Co powiesz w danej sytuacji?", tr: "Przetłumacz całe zdanie", free: "Odpowiedz na pytanie po swojemu", dict: "Posłuchaj i zapisz zdanie", shadow: "Posłuchaj i powtórz na głos",
-  grammar: "Krótkie zasady i ćwiczenia", irr: "go – went – gone", wf: "Utwórz właściwą formę słowa", phr: "look for, depend on…",
+  grammar: "Od A1 do C1, wyjaśnione po polsku",irr: "go – went – gone", wf: "Utwórz właściwą formę słowa", phr: "look for, depend on…",
   read: "Teksty, dialogi i maile z pytaniami", exam: "Sprawdź, czy przejść poziom wyżej", chat: "Scenki z Claude jako rozmówcą", write: "Tekst z oceną Claude"
 };
 const CATALOG = [
@@ -1973,7 +1973,7 @@ function grammarHTML() {
         return `<button class="opt ${cls}" data-act="gr-pick" data-i="${i}" ${picked != null ? "disabled" : ""}><kbd>${i + 1}</kbd><span>${esc(optLabel(o))}</span></button>`;
       }).join("")}</div>
       ${picked == null ? `<div style="margin-top:12px"><button class="linkbtn" type="button" data-act="gr-rules">${g.showRules ? "Ukryj zasady" : "Pokaż zasady"}</button></div>` :
-        `<div class="feedback ${ok ? "ok" : "no"}"><strong>${ok ? "Dobrze!" : "Poprawnie: " + esc(optLabel(it.a))}</strong>
+        `<div class="feedback ${ok ? "ok" : "no"}"><strong>${ok ? "Dobrze!" : "Twoja odpowiedź: " + esc(optLabel(it.opts[picked])) + " · poprawnie: " + esc(optLabel(it.a))}</strong>
           <span class="sub" style="justify-content:flex-start;color:var(--ink)">${esc(fillSentence(it.q, it.a))} ${speakBtn(fillSentence(it.q, it.a), true)}</span>
           ${it.why ? `<span>${esc(it.why)}</span>` : ""}</div>
         <div class="actions"><button class="btn primary" type="button" data-act="gr-next">${g.i + 1 < total ? "Dalej" : "Zobacz wynik"} <kbd>Enter</kbd></button></div>`}`;
@@ -1983,7 +1983,10 @@ function grammarHTML() {
   return `${back}<div class="summary">
     <h2>${esc(t.title)}: ${pct}%</h2>
     <div class="score"><div><b>${g.ok}</b><small>dobrze</small></div><div><b>${total - g.ok}</b><small>błędy</small></div><div><b>${gScore(t.id)}%</b><small>najlepszy wynik</small></div></div>
-    ${g.missed.length ? `<div class="rules"><h3>Popraw te zdania</h3><ul>${g.missed.map(it => `<li>${esc(fillSentence(it.q, it.a))}${it.why ? ` <span class="note">– ${esc(it.why)}</span>` : ""}</li>`).join("")}</ul></div>` : `<p class="note">Wszystko dobrze. Świetnie!</p>`}
+    ${g.missed.length ? `<div class="rules"><h3>Twoje błędy</h3><ul>${g.missed.map(it => `<li class="gmiss">
+      <span class="gm-no">✗ ${sentenceHTML(it.q, it.picked, "no")}</span>
+      <span class="gm-ok">✓ ${sentenceHTML(it.q, it.a, "ok")}</span>
+      ${it.why ? `<span class="note">${esc(it.why)}</span>` : ""}</li>`).join("")}</ul></div>` : `<p class="note">Wszystko dobrze. Świetnie!</p>`}
     <div class="actions"><button class="btn primary" type="button" data-act="gr-start">Jeszcze raz <kbd>Enter</kbd></button><button class="btn" type="button" data-act="gr-list">Inny temat</button></div>
   </div>`;
 }
@@ -2002,7 +2005,7 @@ function grammarAct(a, el) {
     if (g.picked != null) return;
     g.picked = +el.dataset.i;
     const it = g.items[g.i];
-    if (it.opts[g.picked] === it.a) g.ok++; else g.missed.push(it);
+    if (it.opts[g.picked] === it.a) g.ok++; else g.missed.push(Object.assign({}, it, { picked: it.opts[g.picked] }));
     countAnswer(); persist();
     speak(fillSentence(it.q, it.a));
   }
