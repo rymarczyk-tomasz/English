@@ -1973,7 +1973,7 @@ function grammarHTML() {
         return `<button class="opt ${cls}" data-act="gr-pick" data-i="${i}" ${picked != null ? "disabled" : ""}><kbd>${i + 1}</kbd><span>${esc(optLabel(o))}</span></button>`;
       }).join("")}</div>
       ${picked == null ? `<div style="margin-top:12px"><button class="linkbtn" type="button" data-act="gr-rules">${g.showRules ? "Ukryj zasady" : "Pokaż zasady"}</button></div>` :
-        `<div class="feedback ${ok ? "ok" : "no"}"><strong>${ok ? "Dobrze!" : "Twoja odpowiedź: " + esc(optLabel(it.opts[picked])) + " · poprawnie: " + esc(optLabel(it.a))}</strong>
+        `<div class="feedback ${ok ? "ok" : "no"}"><strong>${ok ? "Dobrze!" : `<span>Twoja odpowiedź: ${esc(optLabel(it.opts[picked]))}</span><br><span>Poprawnie: ${esc(optLabel(it.a))}</span>`}</strong>
           <span class="sub" style="justify-content:flex-start;color:var(--ink)">${esc(fillSentence(it.q, it.a))} ${speakBtn(fillSentence(it.q, it.a), true)}</span>
           ${it.why ? `<span>${esc(it.why)}</span>` : ""}</div>
         <div class="actions"><button class="btn primary" type="button" data-act="gr-next">${g.i + 1 < total ? "Dalej" : "Zobacz wynik"} <kbd>Enter</kbd></button></div>`}`;
@@ -2021,7 +2021,10 @@ function grammarAct(a, el) {
     }
   }
   render();
-  stage.scrollIntoView({ block: "nearest" });
+  // after an answer, bring the explanation and the "Dalej" button into view on short screens
+  const next = a === "gr-pick" && stage.querySelector('[data-act="gr-next"]');
+  if (next) next.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  else stage.scrollIntoView({ block: "nearest" });
 }
 
 function grammarSideHTML() {
@@ -2050,8 +2053,8 @@ function renderMain() {
   if (mob) {
     stage.insertAdjacentHTML("afterbegin", focusBarHTML());
     // after checking an answer, bring the feedback and the Next button into view
-    const fb = session && session.state && session.state.result && stage.querySelector(".feedback");
-    if (fb) fb.scrollIntoView({ block: "nearest" });
+    const fb = session && session.state && (session.state.result || session.state.picked != null) && stage.querySelector(".feedback");
+    if (fb) (stage.querySelector('[data-act="next"]') || fb).scrollIntoView({ block: "nearest" });
   }
 }
 function renderStage() {
