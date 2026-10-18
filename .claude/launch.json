@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "angielski", "runtimeExecutable": "python", "runtimeArgs": ["-m", "http.server", "8766", "--directory", "D:\\Projekty\\English"], "port": 8766 }
+  ]
+}
