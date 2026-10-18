@@ -2,13 +2,13 @@
 const GRAMMAR = [
 { id: "art-a-an", lvl: "A1", title: "Przedimki a / an", sum: "Kiedy „a”, a kiedy „an”.",
   rules: ["**a** przed spółgłoską w wymowie: a car, a dog, a university (czyt. juniwersity – zaczyna się od „j”).",
-    "**an** przed samogłoską w wymowie: an apple, an engineer, an hour (czyt. ałe – h jest nieme).",
+    "**an** przed samogłoską w wymowie: an apple, an engineer, an hour (czyt. ałer – h jest nieme).",
     "Liczy się dźwięk, nie litera: a European (czyt. juropijen), an MBA (czyt. em-bi-ej).",
     "a/an tylko z policzalnymi w liczbie pojedynczej: a pen, ale nie „a water”.",
     "Przy zawodach zawsze stawiamy przedimek (po polsku nic), a wybór a czy an zależy od pierwszego dźwięku: She's **an** engineer, he's **a** pilot."],
   ex: `I'm ___ welder.|a|an;the|„Welder” (czyt. łelder) zaczyna się od spółgłoski.
 She is ___ engineer.|an|a;–|„Engineer” (czyt. endżinija) zaczyna się samogłoską.
-We waited for ___ hour.|an|a;–|„Hour” czytamy „ałe” – h jest nieme, więc słychać samogłoskę.
+We waited for ___ hour.|an|a;–|„Hour” czytamy „ałer” – h jest nieme, więc słychać samogłoskę.
 He studies at ___ university in Kraków.|a|an;–|„University” czytamy „juniwersity” – zaczyna się od „j”, czyli spółgłoski.
 I need ___ umbrella.|an|a;–|„Umbrella” (czyt. ambrela) zaczyna się samogłoską.
 It's ___ old house.|an|a;–|Liczy się pierwsze słowo po przedimku: old.
@@ -31,7 +31,7 @@ We had ___ breakfast at 7.|–|the;a|Posiłki zwykle bez przedimka.
 She lives in ___ USA.|the|–;a|Nazwy ze States, Kingdom, Republic mają the.
 He lives in ___ Poland.|–|the;a|Większość krajów bez przedimka.
 I saw ___ interesting film yesterday.|an|the;–|Film pojawia się pierwszy raz.
-___ weld on this beam is cracked.|The|A;–|Chodzi o konkretną spoinę.` },
+We checked one weld yesterday. ___ weld is cracked.|The|A;–|Spoina była już wspomniana, więc the.` },
 { id: "be", lvl: "A1", title: "Czasownik to be", sum: "am, is, are, was, were.",
   rules: ["I **am**, you / we / they **are**, he / she / it **is**.",
     "Skróty: I'm, you're, he's, it's, we're, they're.",
@@ -50,7 +50,7 @@ ___ you busy now?|Are|Is;Am
 The machine ___ broken.|is|are;am|Machine – liczba pojedyncza.` },
 { id: "pres-simple", lvl: "A1", title: "Present Simple", sum: "Zwyczaje, fakty, rutyna.",
   rules: ["Zwyczaje, stałe sytuacje i fakty: I work in a factory. Water boils at 100°C.",
-    "he / she / it dostaje **-s**: she work**s**, he go**es**, it watch**es**.",
+    "he / she / it dostaje **-s**: she work**s**, he go**es**, it watch**es**; spółgłoska + y → **-ies**: study → stud**ies**; have → **has**.",
     "Przeczenie: **don't / doesn't** + czasownik bez -s: He doesn't work.",
     "Pytanie: **Do / Does** + osoba + czasownik: Does she speak English?",
     "Sygnały: always, usually, often, sometimes, never, every day."],
@@ -95,7 +95,7 @@ Are there ___ mistakes in the drawing?|any|some;a
 There ___ a storm last night.|was|were;is` },
 { id: "possessive", lvl: "A1", title: "Zaimki dzierżawcze i ’s", sum: "my, your, its, their, Tom's.",
   rules: ["I → **my**, you → **your**, he → **his**, she → **her**, it → **its**, we → **our**, they → **their**.",
-    "**its** (jego, o rzeczy) to nie **it's** (it is).",
+    "**its** (jego / jej – o rzeczach i zwierzętach) to nie **it's** (it is).",
     "**their** (ich) ≠ **there** (tam) ≠ **they're** (they are).",
     "Dopełniacz ’s: Tom**'s** car; liczba mnoga: my parents**'** house.",
     "Bez the przed zaimkiem: my car, nie „the my car”."],
@@ -105,13 +105,13 @@ The company changed ___ logo.|its|it's;his|Its = jego (firmy); it's = it is.
 ___ late, let's go.|It's|Its;It|Tu potrzebujemy it is.
 They parked ___ car outside.|their|there;they're
 This is ___ car.|Tom's|Toms;Tom|Dopełniacz: Tom's.
-My ___ house is big.|parents'|parent's;parents|Dwoje rodziców – apostrof po s.
+My mum and dad live here. It's my ___ house.|parents'|parent's;parents|Dwoje rodziców (liczba mnoga na -s) – apostrof po s.
 Is this ___ phone?|your|you;you're` },
 { id: "plural", lvl: "A1", title: "Liczba mnoga", sum: "boxes, cities, knives, children.",
   rules: ["Zwykle + **-s**: car → cars, bolt → bolts.",
     "Po -s, -sh, -ch, -x + **-es**: box → boxes, watch → watches.",
     "Spółgłoska + y → **-ies**: city → cities; ale samogłoska + y: day → days.",
-    "-f / -fe → **-ves**: knife → knives, shelf → shelves.",
+    "-f / -fe → zwykle **-ves**: knife → knives, shelf → shelves (ale: roof → roofs, chef → chefs).",
     "Nieregularne: man → **men**, woman → **women**, child → **children**, person → **people**, foot → **feet**, tooth → **teeth**."],
   ex: `I have two ___.|children|childs;childrens
 There are three ___ in the drawer.|knives|knifes;knive
@@ -140,7 +140,7 @@ ___ week I'm working nights.|This|These;Those` },
 { id: "pronouns", lvl: "A1", title: "I czy me? Zaimki osobowe", sum: "he – him, she – her, they – them.",
   rules: ["Podmiot (kto robi): **I, you, he, she, it, we, they**.",
     "Dopełnienie (po czasowniku i przyimku): **me, you, him, her, it, us, them**: Call **me**. Give it to **him**.",
-    "Po polsku to „mnie, ciebie, go, ją, nas, ich”.",
+    "Po polsku to m.in. „mnie / mi, ciebie / ci, go / mu, ją / jej, nas / nam, was / wam, ich / im”.",
     "I zawsze wielką literą."],
   ex: `Can you help ___?|me|I;my
 I know Anna. I see ___ every day.|her|she;hers
@@ -211,7 +211,7 @@ ___ you at work yesterday?|Were|Did;Was` },
   rules: ["**always** (zawsze), **usually** (zwykle), **often** (często), **sometimes** (czasami), **rarely** (rzadko), **never** (nigdy).",
     "Przed zwykłym czasownikiem: I **always** get up at 6.",
     "Po to be: He is **always** late.",
-    "Po can / have: I can **never** remember.",
+    "Po czasownikach posiłkowych i modalnych (can, will, have w Present Perfect): I can **never** remember. I have **never** been there.",
     "Pytanie: **How often**...? Once / twice a week – na końcu zdania."],
   ex: `I ___ at six.|always get up|get up always;always am get up
 She ___ late.|is never|never is;never
@@ -269,9 +269,9 @@ My office is ___ the second floor.|on|in;at
 Wait for me ___ the entrance.|at|in;on
 He sat ___ me and Anna.|between|among;next|Między dwiema osobami – between.` },
 { id: "comparatives", lvl: "A2", title: "Stopniowanie przymiotników", sum: "cheaper, the most expensive, better.",
-  rules: ["Krótkie: **-er / -est**: cheap → cheaper → the cheapest; big → bigger → the biggest.",
-    "Na -y: easy → easier → the easiest.",
-    "Dłuższe: **more / the most**: expensive → more expensive → the most expensive.",
+  rules: ["Jednosylabowe: **-er / -est**: cheap → cheaper → the cheapest. Krótka samogłoska + spółgłoska – podwajamy: big → bigger → the biggest.",
+    "Dwusylabowe na -y: easy → easier → the easiest.",
+    "Pozostałe dwusylabowe i dłuższe: **more / the most**: expensive → more expensive → the most expensive.",
     "Nieregularne: good → better → the best; bad → worse → the worst.",
     "Porównanie: **than**; równość: **as ... as**: Steel is heavier than aluminium. TIG isn't as fast as MIG."],
   ex: `This machine is ___ than the old one.|faster|more fast;fastest
@@ -315,8 +315,8 @@ ___ you help me with this box?|Will|Are;Do|Prośba – will.
 We ___ to Berlin on Monday. The tickets are booked.|are flying|fly;will flying
 The forecast says it ___ sunny tomorrow.|will be|is being;be` },
 { id: "modals", lvl: "A2", title: "Must, have to, should, can", sum: "Obowiązek, zakaz, rada, możliwość.",
-  rules: ["**must** – obowiązek, przepisy: You must wear goggles.",
-    "**have to** – obowiązek z zewnątrz: I have to start at 6. Przeszłość: **had to**.",
+  rules: ["**must** – mówiący uważa, że trzeba; też napisy i regulaminy: You must wear goggles.",
+    "**have to** – obowiązek narzucony przez innych lub okoliczności (szef, grafik): I have to start at 6. Przeszłość: **had to**.",
     "**mustn't** – zakaz! **don't have to** – nie musisz, nie ma potrzeby.",
     "**should / shouldn't** – rada: You should check the gas flow.",
     "**can / can't** – umiejętność, możliwość; **could** – przeszłość albo uprzejma prośba."],
@@ -427,7 +427,7 @@ I've ___ to Rome. It was great.|been|gone;go
 Have you seen this film? – Yes, I ___.|have|did;am
 They ___ never worked abroad.|have|has;are` },
 { id: "pres-perfect", lvl: "B1", title: "Present Perfect czy Past Simple?", sum: "Doświadczenia kontra konkretna przeszłość.",
-  rules: ["**Present Perfect** (have / has + III forma) – doświadczenie bez podania, kiedy: I've been to London.",
+  rules: ["**Present Perfect** (have / has + 3. forma) – doświadczenie bez podania, kiedy: I've been to London.",
     "Skutek widoczny teraz: I've lost my keys (i nadal ich nie mam).",
     "Z **already, yet, just, ever, never** i **for / since**: I've worked here for 5 years / since 2019.",
     "**Past Simple** – gdy mówimy, kiedy: yesterday, ago, last year, in 2019 → zawsze Past Simple.",
@@ -446,19 +446,19 @@ ___ you seen my calliper? I can't find it.|Have|Did;Do` },
   rules: ["**Zerowy**: If + Present Simple, Present Simple – zawsze prawda: If you heat ice, it melts.",
     "**Pierwszy**: If + Present Simple, **will** – realne w przyszłości: If it rains, we'll stay home.",
     "**Drugi**: If + Past Simple, **would** – nierealne, hipotetyczne: If I had money, I would buy a plane.",
-    "Rada: **If I were you**, I would...",
+    "W drugim okresie **were** dla wszystkich osób: If I / he / she **were**... Rada: **If I were you**, I would...",
     "Po **if** nie ma will: If he comes (nie: if he will come). **unless** = if not."],
   ex: `If it ___ tomorrow, we'll cancel the flight.|rains|will rain;rained|Po if nie ma will.
-If I ___ rich, I would buy a plane.|were|am;will be
+If I ___ rich, I would buy a plane.|were|am;will be|Drugi okres: were (też dla I).
 If you heat water to 100°C, it ___.|boils|would boil;boiled
 If you don't hurry, you ___ the bus.|'ll miss|miss;would miss
-If I ___ you, I'd take the job.|were|am;would be
+If I ___ you, I'd take the job.|were|am;would be|Stała rada: If I were you.
 What would you do if you ___ the lottery?|won|win;will win
-I won't go ___ you come with me.|unless|if;when|Unless = if not.
+I don't want to go alone. I won't go ___ you come with me.|unless|if;when|Unless = if not: nie pójdę, jeśli ty nie pójdziesz.
 If she ___ more time, she would learn Spanish.|had|has;will have
 We'll start the test if the parts ___ on time.|arrive|will arrive;arrived` },
 { id: "passive", lvl: "B1", title: "Strona bierna", sum: "The frame is welded...",
-  rules: ["**be + III forma** – ważna czynność, nie wykonawca: The frame **is welded** in Hall 2.",
+  rules: ["**be + 3. forma** – ważna czynność, nie wykonawca: The frame **is welded** in Hall 2.",
     "Czasy: is made / was made / has been made / will be made; z modalem: must **be checked**.",
     "Wykonawca z **by**: The bridge was designed by a famous engineer.",
     "Bardzo częsta w instrukcjach i dokumentacji technicznej."],
@@ -488,7 +488,7 @@ He stopped ___ ten years ago. Now he doesn't smoke.|smoking|to smoke;smoke` },
 { id: "relative", lvl: "B1", title: "Zdania względne", sum: "who, which, that, where, whose.",
   rules: ["**who** – ludzie: The welder who fixed it is new.",
     "**which** – rzeczy: The machine which broke is old.",
-    "**that** – ludzie i rzeczy w zdaniach definiujących.",
+    "**that** – ludzie i rzeczy w zdaniach definiujących (bez przecinków, informacja niezbędna): The man that called you is here.",
     "**where** – miejsca; **whose** – czyj: the man whose car was stolen.",
     "Dodatkowa informacja w przecinkach – tylko who / which, nie that: My boss, who is from Berlin, ..."],
   ex: `The engineer ___ designed this is on holiday.|who|which;where
@@ -515,7 +515,8 @@ There ___ be a cinema here.|used to|is used to;use to` },
     "Present → Past, Past i Present Perfect → Past Perfect, will → **would**, can → **could**.",
     "Zmieniają się określenia: today → that day, tomorrow → the next day, here → there.",
     "**say** (bez osoby) / **tell** + osoba: She said that... / She told me that...",
-    "Pytania mają szyk zdania twierdzącego: She asked where I **lived**."],
+    "Pytania mają szyk zdania twierdzącego: She asked where I **lived**.",
+    "Pytania tak / nie: **if / whether**: \"Are you ready?\" → He asked **if** I was ready."],
   ex: `"I'm busy." → He said he ___ busy.|was|is;were
 "I will call you." → She said she ___ call me.|would|will;can
 She ___ me that she was leaving.|told|said;spoke|Tell + osoba.
@@ -604,7 +605,7 @@ I ___ my homework in the evening.|do|make;take
 We ___ a lot of money last year.|made|did;took
 Let's ___ business together.|do|make;work
 Don't ___ so much noise!|make|do;have
-I'll ___ my best.|do|make;try
+I'll ___ my best.|do|make;have
 She ___ friends easily.|makes|does;has
 Who ___ the shopping in your house?|does|makes;goes` },
 { id: "both-either", lvl: "B1", title: "Both, either, neither, each, every", sum: "Oba, któryś, żaden, każdy.",
@@ -664,7 +665,7 @@ We had a lot of ___ at the party.|fun|funny;funs
 Our new boss is very ___. Everyone likes him.|nice|sympathetic;sensible|Sympathetic znaczy „współczujący”.
 After many hours we ___ found the problem.|eventually|actually;possibly` },
 { id: "cond-3", lvl: "B2", title: "Trzeci okres warunkowy i I wish", sum: "Gdybym wtedy... / Szkoda, że...",
-  rules: ["**Trzeci**: If + Past Perfect, **would have** + III forma – przeszłość nie do zmiany: If I had left earlier, I would have caught the train.",
+  rules: ["**Trzeci**: If + Past Perfect, **would have** + 3. forma – przeszłość nie do zmiany: If I had left earlier, I would have caught the train.",
     "**Mieszany**: If + Past Perfect, **would** + czasownik – skutek teraz: If I had studied, I would be an engineer now.",
     "**I wish / If only** + Past Simple – żal o teraźniejszość: I wish I had more time.",
     "**I wish** + Past Perfect – żal o przeszłość: I wish I hadn't said that.",
@@ -680,7 +681,7 @@ If only I ___ the answer!|knew|know;would know` },
 { id: "narrative", lvl: "B2", title: "Czasy w opowiadaniu", sum: "Łączenie Past Simple, Continuous i Perfect.",
   rules: ["**Past Continuous** (was / were + -ing) – tło, czynność w toku: I was welding when the power went off.",
     "**Past Simple** – kolejne zdarzenia, przerwanie: The power went off.",
-    "**Past Perfect** (had + III) – wcześniej niż inne zdarzenie: When I arrived, the meeting had started.",
+    "**Past Perfect** (had + 3. forma) – wcześniej niż inne zdarzenie: When I arrived, the meeting had started.",
     "**Past Perfect Continuous** – jak długo trwało wcześniej: I had been waiting for an hour.",
     "Zwykle **while** + continuous, **when** + simple."],
   ex: `I ___ dinner when you called.|was cooking|cooked;had cooked
@@ -692,9 +693,9 @@ The sun ___ and the birds were singing.|was shining|shone;had shone|Tło opowie�
 When I opened the door, I saw that someone ___ the window.|had broken|broke;was breaking` },
 { id: "deduction", lvl: "B2", title: "Must have, might have, can't have", sum: "Wnioskowanie i przypuszczenia.",
   rules: ["Teraz: **must** (na pewno), **might / may / could** (może), **can't** (na pewno nie): He must be tired.",
-    "Przeszłość: **must have** + III, **might have** + III, **can't have** + III: The weld must have cooled too fast.",
-    "**should have** + III – krytyka lub żal: You should have told me.",
-    "**needn't have** + III – zrobione niepotrzebnie."],
+    "Przeszłość: **must have** + 3. forma, **might have** + 3. forma, **can't have** + 3. forma: The weld must have cooled too fast.",
+    "**should have** + 3. forma – krytyka lub żal: You should have told me.",
+    "**needn't have** + 3. forma – zrobione niepotrzebnie."],
   ex: `He's worked 12 hours. He ___ be exhausted.|must|can't;should
 She ___ be at home – I've just seen her in the office.|can't|must;might
 The crack ___ have been caused by fatigue, but we're not sure.|might|must;can't|Nie jesteśmy pewni.
@@ -717,7 +718,7 @@ They climbed ___ Mount Everest.|–|the;a
 He's ___ best welder I know.|the|a;–
 I play ___ tennis on Saturdays.|–|the;a` },
 { id: "causative", lvl: "B2", title: "Have something done, it is said", sum: "Zlecanie i konstrukcje bezosobowe.",
-  rules: ["**have / get** + przedmiot + III forma – ktoś robi coś dla nas: I had my car repaired.",
+  rules: ["**have / get** + przedmiot + 3. forma – ktoś robi coś dla nas: I had my car repaired.",
     "We're having the frames galvanised = ktoś nam je ocynkuje.",
     "**It is said / believed that...** – bezosobowo: It is believed that the fire started in the kitchen.",
     "**He is said / thought to...**: He is thought to be the best."],
@@ -745,7 +746,7 @@ By the time you arrive, I ___ the report.|will have finished|finish;am finishing
     "**advise, warn, remind, ask, encourage, tell** + osoba + **to**: She advised me to rest.",
     "**agree, refuse, offer, promise, threaten** + **to**: He refused to help.",
     "**apologise for** + -ing, **accuse sb of** + -ing, **insist on** + -ing.",
-    "**suggest that** + osoba + bezokolicznik: He suggested that we leave early."],
+    "**suggest that** + osoba + forma podstawowa (bez to): He suggested that we leave early."],
   ex: `He denied ___ the money.|taking|to take;take
 She advised me ___ a doctor.|to see|seeing;see
 They refused ___ the contract.|to sign|signing;sign
@@ -882,13 +883,13 @@ What happened ___ that the machine overheated.|was|is that;did` },
   ex: `We recommend that the parts ___ checked twice.|be|are;will be
 It's high time we ___ a decision.|made|make;will make
 I'd rather you ___ tell anyone.|didn't|don't;won't
-He insisted that she ___ the meeting.|attend|attends;attended
+The boss demanded that she ___ the meeting.|attend|attends;will attend|Po demand that – forma podstawowa, bez -s.
 He acts as if he ___ the owner.|were|is;will be
 The client demands that the order ___ delivered by Friday.|be|is;will` },
 { id: "participle", lvl: "C1", title: "Imiesłowy w skróconych zdaniach", sum: "Having finished..., Built in 1920...",
-  rules: ["**Having + III** – czynność wcześniejsza: Having finished the report, he went home.",
+  rules: ["**Having + 3. forma** – czynność wcześniejsza: Having finished the report, he went home.",
     "**-ing** – równocześnie lub przyczyna: Feeling tired, I went to bed.",
-    "**III forma** – znaczenie bierne: Made in Germany, the machine is very reliable.",
+    "**3. forma** – znaczenie bierne: Made in Germany, the machine is very reliable.",
     "Podmiot obu części musi być ten sam (błąd: „Walking home, the rain started”).",
     "Przeczenie: **Not** knowing the answer, she stayed silent."],
   ex: `___ the report, he went home.|Having finished|Finished;Have finished
@@ -940,7 +941,7 @@ I have no idea ___.|whatsoever|at all ever;however
 This is the ___ thing I need.|very|much;so
 I don't like it ___.|at all|whatsoever all;in all` },
 { id: "ellipsis", lvl: "C1", title: "So, not, one – unikanie powtórzeń", sum: "I hope so, neither do I, the red one.",
-  rules: ["**I think so / I hope so / I'm afraid not / I guess not.**",
+  rules: ["Tak: **I think so / I hope so.** Nie: **I hope not / I'm afraid not / I guess not** (nie: I don't hope so).",
     "**So do I** (ja też) / **Neither do I**, **Nor do I** (ja też nie) – z tym samym czasownikiem posiłkowym.",
     "**one / ones** zamiast rzeczownika: the red **one**, the new **ones**.",
     "Krótkie odpowiedzi z posiłkowym: \"Can you swim?\" – \"I **can**.\""],
