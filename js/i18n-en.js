@@ -45,8 +45,9 @@ const UI_EN = {
   "O aplikacji": "About", "Postęp nauki": "Learning progress", "Wyzeruj postęp": "Reset progress",
   "Usunąć cały postęp?": "Delete all progress?", "Tak, wyzeruj": "Yes, reset", "Anuluj": "Cancel",
   "Każda dobra odpowiedź przesuwa słowo o jedno pudełko dalej (# h, # dzień, #, #, # dni). Błąd cofa je na początek.": "Each correct answer moves a word one box further (# h, # day, #, #, # days). A mistake sends it back to the start.",
-  "Język aplikacji": "App language", "Automatycznie": "Auto", "Polski": "Polish",
-  "Automatycznie: po polsku na poziomach # i #, po angielsku od #. Znaczenia słówek, zasady gramatyki i polecenia po polsku zostają bez zmian.": "Auto: Polish at levels # and #, English from # up. Polish meanings, grammar rules and Polish instructions stay as they are.",
+  "Język aplikacji": "App language", "Polski": "Polish",
+  "Od poziomu # warto przełączyć aplikację na angielski. Znaczenia słówek, zasady gramatyki i polecenia po polsku zostają bez zmian.": "From level # up it's worth using the app in English. Polish meanings, grammar rules and Polish instructions stay as they are.",
+  "Więcej ćwiczeń ze słówkami": "More vocabulary practice",
   "Wskazówki i postęp": "Tips and progress",
   // sync
   "Łączę z Twoim kontem…": "Connecting to your account…", "Postęp zapisuje się tylko w tej przeglądarce.": "Progress is saved in this browser only.",

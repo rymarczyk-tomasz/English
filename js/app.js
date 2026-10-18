@@ -27,8 +27,8 @@ function placeOf(topic, en) {
 const SECTIONS = [
   ["today", "Dziś", [["review", "Powtórka dnia"]]],
   ["words", "Słówka", [["cards", "Fiszki"], ["quiz", "Quiz"], ["type", "Pisanie"], ["listen", "Ze słuchu"], ["gap", "Luki"], ["hard", "Najtrudniejsze"], ["own", "Moje słówka"], ["list", "Lista"]]],
-  ["sent", "Zdania", [["sit", "Sytuacje"], ["tr", "Tłumaczenie"], ["free", "Odpowiedz swobodnie"], ["dict", "Dyktando"], ["shadow", "Powtarzanie na głos"]]],
   ["gram", "Gramatyka", [["grammar", "Zasady i ćwiczenia"], ["irr", "Nieregularne"], ["wf", "Słowotwórstwo"], ["phr", "Phrasal verbs i przyimki"]]],
+  ["sent", "Zdania", [["sit", "Sytuacje"], ["tr", "Tłumaczenie"], ["free", "Odpowiedz swobodnie"], ["dict", "Dyktando"], ["shadow", "Powtarzanie na głos"]]],
   ["read", "Czytanie", [["read", "Teksty i dialogi"]]],
   ["exam", "Egzamin", [["exam", "Egzamin poziomu"]]],
   ["ai", "Z Claude", [["chat", "Rozmowa"], ["write", "Pisanie z oceną"]]]
@@ -222,7 +222,7 @@ function setPref(k, v) { prefs[k] = v; store.prefs = prefs; persist(); if (k ===
 // Numbers, levels and „quoted” fragments are placeholders (#), so "Pytanie 3 z 12" uses the key "Pytanie # z #".
 const I18N_PH = /„[^”]*”|\b[ABC][12]\b|\d+(?:[.,]\d+)?/g;
 const i18nKey = s => s.replace(I18N_PH, "#");
-const uiEN = () => prefs.ui === "en" || ((prefs.ui || "auto") === "auto" && ["B1", "B2", "C1"].includes(prefs.level));
+const uiEN = () => prefs.ui === "en";
 function trLine(t) {
   if (UI_EN[t] != null) return UI_EN[t];
   const k = i18nKey(t);
@@ -300,10 +300,28 @@ if (typeof MutationObserver !== "undefined") {
 // Claude writes its feedback in the interface language.
 const fbLang = () => uiEN() ? "English" : "Polish";
 function langPanelHTML() {
-  const opts = [["auto", "Automatycznie"], ["pl", "Polski"], ["en", "English"]], cur = prefs.ui || "auto";
+  const opts = [["pl", "Polski"], ["en", "English"]], cur = prefs.ui === "en" ? "en" : "pl";
   return `<div class="panel"><h3>Język aplikacji</h3>
     <div class="seg rates" role="group" aria-label="Język aplikacji">${opts.map(([k, l]) => `<button type="button" data-ui="${k}" aria-pressed="${cur === k}">${l}</button>`).join("")}</div>
-    <p class="note">Automatycznie: po polsku na poziomach A1 i A2, po angielsku od B1. Znaczenia słówek, zasady gramatyki i polecenia po polsku zostają bez zmian.</p></div>`;
+    <p class="note">Od poziomu B1 warto przełączyć aplikację na angielski. Znaczenia słówek, zasady gramatyki i polecenia po polsku zostają bez zmian.</p></div>`;
+}
+// From B1 up, ask once whether to switch the interface to English (until then it stays Polish).
+const HIGH_LEVELS = ["B1", "B2", "C1"];
+function askUiLang() {
+  if (prefs.ui === "pl" || prefs.ui === "en" || !HIGH_LEVELS.includes(prefs.level) || document.querySelector("dialog.askui")) return;
+  const d = document.createElement("dialog");
+  d.className = "askui";
+  d.setAttribute("aria-labelledby", "askui-t");
+  d.innerHTML = `<h2 id="askui-t">Poziom ${prefs.level} – przejść na angielski?</h2>
+    <p>Od poziomu B1 dobrą praktyką jest używanie aplikacji po angielsku: przyciski, polecenia i komunikaty będą po angielsku, więc masz więcej kontaktu z językiem.</p>
+    <p>Znaczenia słówek, zasady gramatyki i polskie zdania do tłumaczenia zostaną po polsku.</p>
+    <p class="note">Zmienisz to w każdej chwili w ustawieniu „Język aplikacji”${isMobile() ? " w zakładce Profil" : ""}.</p>
+    <div class="actions"><button type="button" class="btn primary" data-pick="en">Przejdź na angielski</button><button type="button" class="btn" data-pick="pl">Zostań przy polskim</button></div>`;
+  const pick = v => { d.close(); d.remove(); setPref("ui", v); render(); };
+  d.addEventListener("click", e => { const b = e.target.closest("[data-pick]"); if (b) pick(b.dataset.pick); });
+  d.addEventListener("cancel", e => { e.preventDefault(); pick("pl"); });
+  document.body.appendChild(d);
+  d.showModal();
 }
 
 const prog = id => store.p[id] || { b: 0, d: 0 };
@@ -576,9 +594,10 @@ const MODE_INFO = {
   read: "Teksty, dialogi i maile z pytaniami", exam: "Sprawdź, czy przejść poziom wyżej", chat: "Scenki z Claude jako rozmówcą", write: "Tekst z oceną Claude"
 };
 const CATALOG = [
-  ["Słówka", ["cards", "quiz", "type", "listen"], ["gap", "hard", "own", "list"]],
-  ["Zdania i wymowa", [], ["sit", "tr", "free", "dict", "shadow"]],
+  ["Słówka", ["cards", "quiz", "type", "listen"], []],
   ["Gramatyka", [], ["grammar", "irr", "wf", "phr"]],
+  ["Więcej ćwiczeń ze słówkami", [], ["gap", "hard", "own", "list"]],
+  ["Zdania i wymowa", [], ["sit", "tr", "free", "dict", "shadow"]],
   ["Czytanie, egzaminy i rozmowa", [], ["read", "exam", "chat", "write"]]
 ];
 const TILE_ICON = { cards: I.cards, quiz: I.quiz, type: I.pen, listen: I.ear };
@@ -664,7 +683,7 @@ function catalogHTML() {
     const due = tiles.length ? dueOf("cards") : 0;
     return `<section class="mgroup"><div class="mrowhead"><h3>${title}</h3>${tiles.length && due ? `<span class="note">${due} do powtórki</span>` : ""}</div>
       ${tiles.length ? `<div class="tiles">${tiles.map(m => `<button type="button" class="tile" data-act="m-open" data-mode="${m}">${TILE_ICON[m]}<b>${esc(modeLabel(m))}</b><small>${MODE_INFO[m]}</small></button>`).join("")}</div>` : ""}
-      <div class="mlist">${rs.map(m => mItem(`data-mode="${m}"`, esc(modeLabel(m)), MODE_INFO[m], modeBadge(m))).join("")}</div></section>`;
+      ${rs.length ? `<div class="mlist">${rs.map(m => mItem(`data-mode="${m}"`, esc(modeLabel(m)), MODE_INFO[m], modeBadge(m))).join("")}</div>` : ""}</section>`;
   }).join("");
 }
 
@@ -2283,7 +2302,7 @@ stage.addEventListener("submit", e => {
 
 ["levels"].forEach(id => document.getElementById(id).addEventListener("click", e => {
   const b = e.target.closest("[data-level]"); if (!b) return;
-  setPref("level", b.dataset.level); renderControls(); newSession(); gram = { view: "list" }; render();
+  setPref("level", b.dataset.level); renderControls(); newSession(); gram = { view: "list" }; render(); askUiLang();
 }));
 if (prefs.level !== "ALL" && !SETS.includes(prefs.level)) prefs.level = "A1";
 document.getElementById("sections").addEventListener("click", e => {
@@ -2308,7 +2327,7 @@ document.querySelector(".mnav").addEventListener("click", e => {
   ui.tab = b.dataset.tab; ui.focus = false; render(); window.scrollTo(0, 0);
 });
 document.getElementById("mlevel").addEventListener("change", e => {
-  setPref("level", e.target.value); renderControls(); newSession(); gram = { view: "list" }; render();
+  setPref("level", e.target.value); renderControls(); newSession(); gram = { view: "list" }; render(); askUiLang();
 });
 document.getElementById("side").addEventListener("toggle", e => { if (e.target.matches(".mtips")) ui.tipsOpen = e.target.open; }, true);
 mq.addEventListener("change", () => render());
@@ -2382,3 +2401,4 @@ newSession();
 render();
 i18nAll();
 initSync();
+askUiLang();

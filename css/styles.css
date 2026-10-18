@@ -138,6 +138,12 @@ header.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-cont
 .btn.good { background: var(--good-bg); color: var(--good); border-color: transparent; }
 .btn.bad { background: var(--bad-bg); color: var(--bad); border-color: transparent; }
 .btn.good:hover { border-color: var(--good); } .btn.bad:hover { border-color: var(--bad); }
+dialog.askui { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); color: var(--ink); padding: 22px; width: min(460px, calc(100vw - 32px)); }
+dialog.askui::backdrop { background: rgb(0 0 0 / .5); }
+.askui h2 { font-family: var(--f-display); font-size: 22px; margin: 0 0 12px; line-height: 1.25; }
+.askui p { margin: 0 0 10px; line-height: 1.5; }
+.askui .actions { flex-direction: column; margin-top: 16px; }
+.askui .actions > * { flex: none; }
 kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid currentColor; border-radius: 5px; padding: 0 5px; opacity: .65; font-weight: 500; }
 
 /* quiz */
