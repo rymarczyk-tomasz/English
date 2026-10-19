@@ -405,6 +405,11 @@ aside { display: grid; gap: 14px; min-width: 0; }
   .typeform input { flex-basis: 100%; }
   .typeform > .btn { flex: 1 1 100%; }
   .actions > * { flex-basis: 140px; }
+  /* in a session the next-step buttons stay pinned to the bottom of the screen, so no scrolling past the feedback */
+  body.focus .actions { position: sticky; bottom: 0; z-index: 4; margin: 18px -14px 0; padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+    background: var(--surface); border-top: 1px solid var(--line); }
+  /* ...and the feedback above them scrolls into view clear of that bar and of the sticky top bar */
+  body.focus .feedback { scroll-margin: 64px 0 calc(84px + env(safe-area-inset-bottom, 0px)); }
   .tablewrap, .chatlog { max-height: none; }
   .bubble { max-width: 90%; }
 }

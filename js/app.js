@@ -2047,7 +2047,7 @@ function renderMain() {
   if (mob) {
     stage.insertAdjacentHTML("afterbegin", focusBarHTML());
     // after checking an answer, bring the feedback and the Next button into view
-    const fb = session && session.state && session.state.result && stage.querySelector(".feedback");
+    const st = session && session.state, fb = st && (st.result || st.picked != null) && stage.querySelector(".feedback");
     if (fb) fb.scrollIntoView({ block: "nearest" });
   }
 }
